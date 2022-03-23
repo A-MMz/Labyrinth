@@ -5,10 +5,10 @@ visited = []
 stack1 = []
 
 cellSize = 50
-gridSize = 5
+gridSize = 10
 
 EDGE_LENGHT = cellSize*gridSize
-EDGE = 25
+EDGE = cellSize/2
 BLACK = (0,0,0)
 WHITE = (255,255,255)
 RED = (255,0,0)
@@ -26,16 +26,20 @@ def drawGrid():
 #------------Movement---------------------------
 def m_North(x,y):
     #                      |inicial: X          Y     | Width       Height     |
-    pygame.draw.rect(screen,BLACK,[x+2, y+2-cellSize, cellSize-2, cellSize*2-4])
+    pygame.draw.rect(screen,BLACK,[x+(cellSize/100), y+(cellSize/100)-cellSize, cellSize-(cellSize/100), cellSize*2-((cellSize/100)*2)])
+    #pygame.draw.rect(screen,BLACK,[x, y-cellSize, cellSize, cellSize*2])
     pygame.display.update()
 def m_South(x,y):
-    pygame.draw.rect(screen,BLACK,[x+2, y+2, cellSize-2, (cellSize*2)-4])
+    pygame.draw.rect(screen,BLACK,[x+(cellSize/100), y+(cellSize/100), cellSize-(cellSize/100), (cellSize*2)-((cellSize/100)*2)])
+    #pygame.draw.rect(screen,BLACK,[x, y, cellSize, cellSize*2])
     pygame.display.update()
 def m_East(x,y):
-    pygame.draw.rect(screen,BLACK,[x+2, y+2, (cellSize*2)-4, cellSize-2])
+    pygame.draw.rect(screen,BLACK,[x+(cellSize/100), y+(cellSize/100), (cellSize*2)-((cellSize/100)*2), cellSize-(cellSize/100)])
+    #pygame.draw.rect(screen,BLACK,[x, y, cellSize*2, cellSize])
     pygame.display.update()
 def m_West(x,y):
-    pygame.draw.rect(screen,BLACK,[x+2-cellSize, y+2, (cellSize*2)-4, cellSize-2])   
+    pygame.draw.rect(screen,BLACK,[x+(cellSize/100)-cellSize, y+(cellSize/100), (cellSize*2)-((cellSize/100)*2), cellSize-(cellSize/100)])  
+    #pygame.draw.rect(screen,BLACK,[x-cellSize, y, cellSize*2, cellSize]) 
     pygame.display.update()
 
 """def cellHighlight():
@@ -44,7 +48,7 @@ def maze_creator(x,y):
     stack1.append((x,y))
     visited.append((x,y))
     while len(stack1) > 0:
-        time.sleep(.5)
+        time.sleep(2)
         directions = []
         if(is_inbounds(x,y-cellSize) and (x,y-cellSize) not in visited):
             directions.append("N")
@@ -79,7 +83,7 @@ def maze_creator(x,y):
                 visited.append((x, y))
                 stack1.append((x, y))
         else:
-            time.sleep(.5)
+            time.sleep(2)
             x, y = stack1.pop()
 
 def main():
@@ -94,7 +98,8 @@ def main():
     pygame.draw.rect(screen,WHITE,[EDGE,EDGE,(EDGE_LENGHT+2),(EDGE_LENGHT+2)],3)
     drawGrid()
     maze_creator(25,25)
-    #pygame.draw.rect(screen,WHITE,[-1,0,10,40],3)
+    pygame.draw.rect(screen,WHITE,[EDGE-10,EDGE+2,cellSize-2,cellSize-2],3)
+    pygame.draw.rect(screen,WHITE,[EDGE_LENGHT-EDGE/2,EDGE_LENGHT+EDGE-cellSize+2,cellSize-2,cellSize-2],3)
     running = True
 
     print(is_inbounds(24,EDGE_LENGHT))
